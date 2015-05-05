@@ -199,7 +199,7 @@ class Genesis_Author_Pro_Book_Meta {
 	 */
 	public function set_fields(){
 
-		$date_description = false === strpos( get_locale(), 'en' ) ? __( ' Please note: Date output may be in English here due to limitations in the code that converts the date to a machine readable format. If the site is correctly configured for translation it will appear correctly on the front end of the site.' ) : '';
+		$date_description = false === strpos( get_locale(), 'en' ) ? __( ' Please note: Date input of month names should be done using English and month names will be in English here due to limitations in the code that converts the date to a machine readable format. If the site is correctly configured for translation it will appear correctly on the front end of the site. Dates entered with numerical months will work regardless of the language.' ) : '';
 
 		$this->_fields = array(
 			array(
