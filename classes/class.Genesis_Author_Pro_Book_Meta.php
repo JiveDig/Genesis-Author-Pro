@@ -199,6 +199,8 @@ class Genesis_Author_Pro_Book_Meta {
 	 */
 	public function set_fields(){
 
+		$date_description = false === strpos( get_locale(), 'en' ) ? __( ' Please note: Date output may be in English here due to limitations in the code that converts the date to a machine readable format. If the site is correctly configured for translation it will appear correctly on the front end of the site.' ) : '';
+
 		$this->_fields = array(
 			array(
 				'name'        => 'featured_text',
@@ -239,7 +241,7 @@ class Genesis_Author_Pro_Book_Meta {
 			array(
 				'name'        => 'publication_date',
 				'label'       => __( 'Publication Date', 'genesis-author-pro' ),
-				'description' => __( 'Most common date formats will be automatically converted to machine readable format on save. The date will be displayed using the date format in the general settings.', 'genesis-author-pro' ),
+				'description' => __( 'Most common date formats will be automatically converted to machine readable format on save. The date will be displayed using the date format in the general settings.', 'genesis-author-pro' ) . $date_description,
 				'type'        => 'text',
 			),
 			array(
@@ -376,7 +378,7 @@ class Genesis_Author_Pro_Book_Meta {
 		$value = empty( $this->_meta_value[$name] ) ? '' : $this->_meta_value[$name];
 
 		if( 'publication_date' === $name && $value ){
-			$value = date_i18n( get_option( 'date_format' ), $value );
+			$value = date( get_option( 'date_format' ), $value );
 		}
 
 		return $value;
