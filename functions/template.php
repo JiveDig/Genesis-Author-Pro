@@ -39,7 +39,56 @@ function genesis_author_pro_get_book_meta( $key, $post_id = '' ){
  */
 function genesis_author_pro_book_meta( $key ){
 
-	if( $value = genesis_author_pro_get_book_meta( $key ) ) {
+	if ( $value = genesis_author_pro_get_book_meta( $key ) ) {
+
+		echo $value;
+
+		return $value;
+
+	}
+
+	return false;
+
+}
+
+/**
+ * Gets the term meta data value from the provided key.
+ * If the value is not available it will return false
+ *
+ * @since 1.1
+ *
+ * @access public
+ * @param string $key
+ * @param obj    $term
+ * @return mixed boolean/string
+ */
+function genesis_author_pro_get_term_meta( $key, $term = '' ){
+
+	if ( empty( $term ) || ! is_object( $term ) ) {
+		return;
+	}
+	
+	if ( function_exists( 'get_term_meta' ) ) {
+		return get_term_meta( $term->term_id, $key, $single );
+	}
+
+	return isset( $term->meta[$key] ) ? $term->meta[$key] : '';
+
+}
+
+/**
+ * Wrapper function to echo genesis_author_pro_get_term_meta().
+ * It will return the value if set or returns false if not set.
+ *
+ * @since 1.1
+ *
+ * @access public
+ * @param string $key
+ * @return mixed boolean/string
+ */
+function genesis_author_pro_term_meta( $key ){
+
+	if ( $value = genesis_author_pro_get_term_meta( $key ) ) {
 
 		echo $value;
 

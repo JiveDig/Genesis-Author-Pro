@@ -1,0 +1,58 @@
+.gss-clear {
+	clear:both;
+}
+
+#custom-sort-container .genesis-metaboxes {
+	width: auto;
+}
+
+#custom-sort-container .genesis-metaboxes .top-buttons {
+	float: left;
+}
+
+#custom-sort-container .genesis-metaboxes .bottom-buttons {
+	clear: both;
+	float: left;
+}
+
+#main-sortables:after {
+	content: "";
+	clear: both;
+	display: block;
+	margin-bottom: 20px;
+}
+
+#main-sortables {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	    -ms-flex-wrap: wrap;
+	        flex-wrap: wrap;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	    -ms-flex-direction: row;
+	        flex-direction: row;
+}
+
+#custom-sort-container .meta-box-sortables .postbox,
+#custom-sort-container .meta-box-sortables .sortable-placeholder {
+	min-height: 352px;
+	float: left;
+	margin: 5px;
+	width: 260px;
+}
+
+#custom-sort-container .meta-box-sortables .postbox img {
+	width: 100%;
+}
+
+#custom-sort-container .meta-box-sortables .postbox.closed {
+	height: 30px;
+}
+
+#custom-sort-container .meta-box-sortables .postbox .handlediv {
+	display: none;
+}
