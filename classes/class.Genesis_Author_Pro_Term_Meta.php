@@ -4,18 +4,18 @@ class Genesis_Author_Pro_Term_Meta {
 
 	/**
 	 * The tag object for the term being edited
-	 * 
+	 *
 	 * @since 1.1
 	 *
 	 * @var obj
 	 * @access public
 	 */
 	var $tag;
-	
-	
+
+
 	/**
 	 * The taxonomy id for the term being edited
-	 * 
+	 *
 	 * @since 1.1
 	 *
 	 * @var string
@@ -25,7 +25,7 @@ class Genesis_Author_Pro_Term_Meta {
 
 	/**
 	 * Builds the custom sorting options for the term editor.
-	 * 
+	 *
 	 * @since 1.1
 	 *
 	 * @access public
@@ -38,7 +38,7 @@ class Genesis_Author_Pro_Term_Meta {
 
 	/**
 	 * Enqueues the required scripts and styles for the term editor.
-	 * 
+	 *
 	 * @since 1.1
 	 *
 	 * @access public
@@ -56,7 +56,7 @@ class Genesis_Author_Pro_Term_Meta {
 	/**
 	 * Callback on the "{$taxonomy}_edit_form" action.
 	 * Builds the settings output for the term options and sets up the metaboxes for sorting.
-	 * 
+	 *
 	 * @since 1.1
 	 *
 	 * @access public
@@ -83,19 +83,23 @@ class Genesis_Author_Pro_Term_Meta {
 			add_meta_box( $book->post_name, $book->post_title, array( $this, 'book_sortable' ), 'book-sort', 'main', '', $book );
 		}
 
+		$display = $this->get_field_value( 'custom-sort' ) ? '' : ' style="display:none;" ';
+
 ?>
 		<div class="wrap gap-clear">
+
+			<h3><?php _e( 'Book Order', 'genesis-author-pro' ); ?></h3>
 
 			<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 			<?php wp_nonce_field( 'meta-box-order' , 'meta-box-order-nonce', false ); ?>
 
 			<table class="form-table">
 				<tbody>
-				<?php $this->checkbox( 'custom-sort', __( 'Enable custom sort', 'genesis-author-pro' ), __( 'This will display a sortable container below with all books in this term that can be dragged into the order in which the books should display in the term archive.', 'genesis-author-pro' ) ); ?>
+				<?php $this->checkbox( 'custom-sort', __( 'Enable custom sort', 'genesis-author-pro' ), __( 'Enabling this option will display a sortable, drag-and-drop container below that includes all books in this term.', 'genesis-author-pro' ), __( 'Custom Book Sort', 'genesis-author-pro' ) ); ?>
 				</tbody>
 			</table>
 
-			<div id="custom-sort-container">
+			<div id="custom-sort-container"<?php echo $display; ?>>
 				<div class="metabox-holder">
 					<div class="postbox-container">
 						<?php do_meta_boxes( 'book-sort', 'main', '' ); ?>
@@ -111,6 +115,13 @@ class Genesis_Author_Pro_Term_Meta {
 				$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 				// postboxes setup
 				postboxes.add_postbox_toggles('book-sort');
+
+				//adds toggle to show/hide sortable
+				$('body').on('change', '#custom-sort', function() {
+					$('#custom-sort-container').toggle();
+				});
+
+
 			});
 			//]]>
 		</script>
@@ -121,7 +132,7 @@ class Genesis_Author_Pro_Term_Meta {
 	/**
 	 * Metabox callback.
 	 * Builds HTML for the sortable metaboxes that allow book order sorting.
-	 * 
+	 *
 	 * @since 1.1
 	 *
 	 * @access public
@@ -152,21 +163,20 @@ class Genesis_Author_Pro_Term_Meta {
 	 * @param string  $name      Label text for the checkbox.
 	 *
 	 */
-	function checkbox( $id, $label, $description = '' ) {
-		printf( '<tr valign="top"><th scope="row"></th><td><p><label for="%s"><input type="checkbox" name="genesis-meta[%s]" id="%s" value="1"%s /> %s</label></p>%s</td></tr>',
-			$id,
-			$id,
+	function checkbox( $id, $label, $description = '', $th = '' ) {
+		printf( '<tr valign="top"><th scope="row">%5$s</th><td><p><label for="%1$s"><input type="checkbox" name="genesis-meta[%1$s]" id="%1$s" value="1"%2$s />%3$s</label></p>%4$s</td></tr>',
 			$id,
 			checked( $this->get_field_value( $id ), 1, false ),
 			$label,
-			empty( $description ) ? '' : sprintf( '<p class="description">%s</p>', $description )
+			empty( $description ) ? '' : sprintf( '<p class="description">%s</p>', $description ),
+			$th
 		);
 		echo '<br />';
 	}
 
 	/**
 	 * Gets the field value from the current term using provided ID.
-	 * 
+	 *
 	 * @since 1.1
 	 *
 	 * @access public
